@@ -1,0 +1,38 @@
+<mujoco model="dynamic_handover">
+  <!-- Combine Trossen bimanual arms with ping pong ball for continuous handover -->
+  <include file="../stationary_ai/stationary_ai.xml"/>
+
+  <!-- Ball physics: MJX does not support fluid drag with implicitfast, so no density/viscosity -->
+  <option timestep="0.0005" integrator="implicitfast"/>
+
+  <default>
+    <pair solref="-100000 0" solreffriction="0 -10000"/>
+  </default>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1=".1 .2 .3" rgb2=".2 .3 .4" width="300" height="300"/>
+    <material name="grid" texture="grid" texrepeat="8 8" reflectance=".2"/>
+    <material name="ball_mat" rgba="0.9 0.2 0.2 1"/>
+  </asset>
+
+  <worldbody>
+    <!-- Ping pong ball from ping_pong.xml: free joint + sphere + ballast for accurate inertia -->
+    <body name="ball" pos="0 0 0.25">
+      <freejoint name="ball_joint"/>
+      <geom name="ball" type="sphere" size="0.02" material="ball_mat" mass="0.0027" condim="3" friction="0.5 0.2 0.01"/>
+      <body name="ballast">
+        <joint type="ball" stiffness="0.1" damping="0.0001"/>
+        <geom name="ballast" type="sphere" size="0.02" contype="0" conaffinity="0" mass="0.01" group="3"/>
+      </body>
+    </body>
+    <!-- Floor plane for when ball drops -->
+    <geom name="floor" size="0.5 0.5 0.01" type="plane" material="grid" pos="0 0 0"/>
+  </worldbody>
+
+  <contact>
+    <pair geom1="tabletop" geom2="ball"/>
+    <pair geom1="floor" geom2="ball"/>
+    <pair geom1="left_paddle_geom" geom2="ball"/>
+    <pair geom1="right_paddle_geom" geom2="ball"/>
+  </contact>
+</mujoco>

@@ -29,6 +29,7 @@ from mujoco_playground._src.dm_control_suite import fish
 from mujoco_playground._src.dm_control_suite import hopper
 from mujoco_playground._src.dm_control_suite import humanoid
 from mujoco_playground._src.dm_control_suite import pendulum
+from mujoco_playground._src.dm_control_suite import ping_pong
 from mujoco_playground._src.dm_control_suite import point_mass
 from mujoco_playground._src.dm_control_suite import reacher
 from mujoco_playground._src.dm_control_suite import swimmer
@@ -61,6 +62,7 @@ _envs = {
     "HumanoidWalk": partial(humanoid.Humanoid, move_speed=humanoid.WALK_SPEED),
     "HumanoidRun": partial(humanoid.Humanoid, move_speed=humanoid.RUN_SPEED),
     "PendulumSwingup": pendulum.SwingUp,
+    "PingPong": ping_pong.PingPong,
     "PointMass": point_mass.PointMass,
     "ReacherEasy": partial(reacher.Reacher, target_size=reacher.BIG_TARGET),
     "ReacherHard": partial(reacher.Reacher, target_size=reacher.SMALL_TARGET),
@@ -90,6 +92,7 @@ _cfgs = {
     "HumanoidStand": humanoid.default_config,
     "HumanoidWalk": humanoid.default_config,
     "PendulumSwingup": pendulum.default_config,
+    "PingPong": ping_pong.default_config,
     "PointMass": point_mass.default_config,
     "ReacherEasy": reacher.default_config,
     "ReacherHard": reacher.default_config,
